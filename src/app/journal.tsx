@@ -29,6 +29,9 @@ export default function JournalScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // 初期状態では最新5件だけ表示する
+  const [showAllTransactions, setShowAllTransactions] = useState(false);
+
   const [editingTransaction, setEditingTransaction] =
     useState<Transaction | null>(null);
   const [editDate, setEditDate] = useState("");
@@ -86,6 +89,7 @@ export default function JournalScreen() {
     }, [loadTransactions]),
   );
 
+  // 合計は表示件数に関係なく、すべての取引から計算する
   const totalIncome = transactions
     .filter((item) => item.transaction_type === "income")
     .reduce((sum, item) => sum + Number(item.amount), 0);
@@ -93,6 +97,11 @@ export default function JournalScreen() {
   const totalExpense = transactions
     .filter((item) => item.transaction_type === "expense")
     .reduce((sum, item) => sum + Number(item.amount), 0);
+
+  // 表示する取引履歴
+  const visibleTransactions = showAllTransactions
+    ? transactions
+    : transactions.slice(0, 5);
 
   function formatAmount(amount: number) {
     return `${Number(amount).toLocaleString("ja-JP")}円`;
@@ -332,73 +341,100 @@ export default function JournalScreen() {
           </Text>
         </View>
       ) : (
-        <View style={styles.transactionList}>
-          {transactions.map((item) => {
-            const isIncome = item.transaction_type === "income";
+        <>
+          <View style={styles.transactionList}>
+            {visibleTransactions.map((item) => {
+              const isIncome = item.transaction_type === "income";
 
-            return (
-              <View key={item.id} style={styles.transactionCard}>
-                <View style={styles.transactionTopRow}>
-                  <Text style={styles.transactionDate}>
-                    {item.transaction_date}
-                  </Text>
+              return (
+                <View key={item.id} style={styles.transactionCard}>
+                  <View style={styles.transactionTopRow}>
+                    <Text style={styles.transactionDate}>
+                      {item.transaction_date}
+                    </Text>
 
-                  <View
-                    style={[
-                      styles.typeBadge,
-                      isIncome ? styles.incomeBadge : styles.expenseBadge,
-                    ]}
-                  >
-                    <Text
+                    <View
                       style={[
-                        styles.typeBadgeText,
-                        isIncome
-                          ? styles.incomeBadgeText
-                          : styles.expenseBadgeText,
+                        styles.typeBadge,
+                        isIncome ? styles.incomeBadge : styles.expenseBadge,
                       ]}
                     >
-                      {isIncome ? "売上・収入" : "経費・支出"}
+                      <Text
+                        style={[
+                          styles.typeBadgeText,
+                          isIncome
+                            ? styles.incomeBadgeText
+                            : styles.expenseBadgeText,
+                        ]}
+                      >
+                        {isIncome ? "売上・収入" : "経費・支出"}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.transactionBottomRow}>
+                    <Text style={styles.description} numberOfLines={2}>
+                      {item.description}
+                    </Text>
+
+                    <Text
+                      style={[
+                        styles.amount,
+                        isIncome ? styles.incomeValue : styles.expenseValue,
+                      ]}
+                    >
+                      {isIncome ? "+" : "-"}
+                      {formatAmount(Number(item.amount))}
                     </Text>
                   </View>
+
+                  <View style={styles.actionRow}>
+                    <Pressable
+                      accessibilityRole="button"
+                      onPress={() => openEditor(item)}
+                      style={styles.editButton}
+                    >
+                      <Text style={styles.editButtonText}>編集</Text>
+                    </Pressable>
+
+                    <Pressable
+                      accessibilityRole="button"
+                      onPress={() => setDeletingTransaction(item)}
+                      style={styles.deleteButton}
+                    >
+                      <Text style={styles.deleteButtonText}>削除</Text>
+                    </Pressable>
+                  </View>
                 </View>
+              );
+            })}
+          </View>
 
-                <View style={styles.transactionBottomRow}>
-                  <Text style={styles.description} numberOfLines={2}>
-                    {item.description}
-                  </Text>
-
-                  <Text
-                    style={[
-                      styles.amount,
-                      isIncome ? styles.incomeValue : styles.expenseValue,
-                    ]}
-                  >
-                    {isIncome ? "+" : "-"}
-                    {formatAmount(Number(item.amount))}
-                  </Text>
-                </View>
-
-                <View style={styles.actionRow}>
-                  <Pressable
-                    accessibilityRole="button"
-                    onPress={() => openEditor(item)}
-                    style={styles.editButton}
-                  >
-                    <Text style={styles.editButtonText}>編集</Text>
-                  </Pressable>
-
-                  <Pressable
-                    accessibilityRole="button"
-                    onPress={() => setDeletingTransaction(item)}
-                    style={styles.deleteButton}
-                  >
-                    <Text style={styles.deleteButtonText}>削除</Text>
-                  </Pressable>
-                </View>
-              </View>
-            );
-          })}
-        </View>
+          {transactions.length > 5 && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ expanded: showAllTransactions }}
+              onPress={() => setShowAllTransactions((current) => !current)}
+              style={{
+                alignItems: "center",
+                paddingVertical: 16,
+                marginBottom: 16,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#2563EB",
+                  fontSize: 14,
+                  fontWeight: "700",
+                }}
+              >
+                {showAllTransactions
+                  ? "最新5件だけ表示 ▲"
+                  : `すべての履歴を表示（${transactions.length}件） ▼`}
+              </Text>
+            </Pressable>
+          )}
+        </>
       )}
 
       <Modal

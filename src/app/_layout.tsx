@@ -192,6 +192,13 @@ export default function RootLayout() {
           href: null,
         }}
       />
+
+      <Tabs.Screen
+        name="categories"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

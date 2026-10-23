@@ -1,0 +1,168 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F5F7FB",
+  },
+  content: {
+    width: "100%",
+    maxWidth: 1080,
+    alignSelf: "center",
+    paddingHorizontal: 24,
+    paddingBottom: 40,
+  },
+  typeSelector: {
+    flexDirection: "row",
+    gap: 10,
+    marginBottom: 20,
+  },
+  typeButton: {
+    flex: 1,
+    paddingVertical: 13,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+  },
+  typeButtonSelected: {
+    borderColor: "#2563EB",
+    backgroundColor: "#DBEAFE",
+  },
+  typeButtonText: {
+    color: "#475569",
+    fontWeight: "600",
+  },
+  typeButtonTextSelected: {
+    color: "#1D4ED8",
+    fontWeight: "800",
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 18,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "#E8EDF5",
+    marginBottom: 28,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "#172033",
+    marginBottom: 18,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#334155",
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: "#172033",
+    marginBottom: 20,
+  },
+  iconGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    marginBottom: 22,
+  },
+  iconButton: {
+    width: 48,
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    backgroundColor: "#F8FAFC",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconButtonSelected: {
+    borderColor: "#2563EB",
+    backgroundColor: "#DBEAFE",
+    borderWidth: 2,
+  },
+  iconText: {
+    fontSize: 24,
+  },
+  primaryButton: {
+    minHeight: 48,
+    borderRadius: 12,
+    backgroundColor: "#2563EB",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 12,
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "800",
+  },
+  cancelButton: {
+    alignItems: "center",
+    paddingVertical: 14,
+  },
+  cancelButtonText: {
+    color: "#64748B",
+    fontWeight: "600",
+  },
+  listSection: {
+    gap: 12,
+  },
+  categoryRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    padding: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#E8EDF5",
+    backgroundColor: "#FFFFFF",
+  },
+  categoryIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: "#EFF6FF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  categoryIconText: {
+    fontSize: 23,
+  },
+  categoryName: {
+    flex: 1,
+    color: "#172033",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  actionButton: {
+    width: 36,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyText: {
+    color: "#64748B",
+    fontSize: 14,
+    lineHeight: 22,
+    paddingVertical: 12,
+  },
+  backButton: {
+    alignItems: "center",
+    padding: 14,
+    marginTop: 16,
+  },
+  backButtonText: {
+    color: "#2563EB",
+    fontWeight: "700",
+  },
+});

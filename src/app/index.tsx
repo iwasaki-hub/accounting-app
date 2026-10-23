@@ -24,6 +24,12 @@ const menuItems = [
     description: "売上・経費・利益を確認",
     color: "#7C3AED",
   },
+  {
+    icon: "⚙",
+    title: "取引項目の管理",
+    description: "項目の追加・編集・削除",
+    color: "#475569",
+  },
 ];
 
 type MonthlyTransaction = {
@@ -210,6 +216,8 @@ export default function Index() {
                   router.push("/journal");
                 } else if (item.title === "会計レポート") {
                   router.push("/reports");
+                } else if (item.title === "取引項目の管理") {
+                  router.push("/categories");
                 }
               }}
               style={styles.menuCard}
