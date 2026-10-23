@@ -21,6 +21,7 @@ import { styles } from "../styles/entry.styles";
 
 export default function EntryScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
+  const titleInputRef = useRef<TextInput>(null);
   const amountFocusedRef = useRef(false);
   const keyboardVisibleRef = useRef(false);
 
@@ -116,6 +117,7 @@ export default function EntryScreen() {
           />
 
           <TextInput
+            ref={titleInputRef}
             value={title}
             onChangeText={setTitle}
             placeholder="取引内容を入力（例：ガソリン代）"
@@ -173,7 +175,11 @@ export default function EntryScreen() {
 
           <Pressable
             accessibilityRole="button"
-            onPress={saveTransaction}
+            onPress={() =>
+              saveTransaction(() => {
+                titleInputRef.current?.focus();
+              })
+            }
             disabled={isSaving}
             style={[styles.saveButton, isSaving && { opacity: 0.6 }]}
           >
