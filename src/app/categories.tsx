@@ -228,7 +228,7 @@ export default function CategoriesScreen() {
       />
 
       <View style={styles.typeSelector}>
-        {(["expense", "income"] as const).map((item) => {
+        {(["income", "expense"] as const).map((item) => {
           const selected = type === item;
 
           return (

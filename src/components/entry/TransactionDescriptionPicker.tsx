@@ -1,5 +1,5 @@
-
-import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { supabase } from "../../lib/supabase";
 import { styles } from "../../styles/entry.styles";
@@ -68,33 +68,48 @@ export default function TransactionDescriptionPicker({
     }
   }, [type]);
 
-  useEffect(() => {
-    void loadCategories();
-  }, [loadCategories]);
+  // 仕訳入力画面に戻るたびに最新の項目を取得する
+  useFocusEffect(
+    useCallback(() => {
+      void loadCategories();
+    }, [loadCategories]),
+  );
 
   return (
     <>
       <Text style={styles.label}>取引内容</Text>
 
-      <Text style={{ color: "#64748B", fontSize: 13, marginBottom: 8 }}>
+      <Text
+        style={{
+          color: "#64748B",
+          fontSize: 13,
+          marginBottom: 8,
+        }}
+      >
         よく使う項目を選択できます。直接入力することもできます。
       </Text>
 
       {isLoading ? (
-        <ActivityIndicator
-          color="#2563EB"
-          style={{ marginVertical: 16 }}
-        />
+        <ActivityIndicator color="#2563EB" style={{ marginVertical: 16 }} />
       ) : loadError ? (
         <View style={{ marginBottom: 12 }}>
           <Text style={{ color: "#DC2626", fontSize: 13 }}>
             取引項目を読み込めませんでした。
           </Text>
+
           <Pressable
             onPress={() => void loadCategories()}
-            style={{ paddingVertical: 10, alignSelf: "flex-start" }}
+            style={{
+              paddingVertical: 10,
+              alignSelf: "flex-start",
+            }}
           >
-            <Text style={{ color: "#2563EB", fontWeight: "700" }}>
+            <Text
+              style={{
+                color: "#2563EB",
+                fontWeight: "700",
+              }}
+            >
               再読み込み
             </Text>
           </Pressable>
@@ -141,6 +156,7 @@ export default function TransactionDescriptionPicker({
                 }}
               >
                 <Text style={{ fontSize: 16 }}>{category.icon}</Text>
+
                 <Text
                   style={{
                     color: selected ? "#1D4ED8" : "#334155",
